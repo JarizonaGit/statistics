@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.176">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Activity A serves as both an introduction to using Quarto and R, while giving you an opportunity to explore basic descriptive statistics.">
+
+<title>APCV 302: Statistics in the Information Age - Activity A: Descriptives</title>
+<style class="anchorjs"></style><style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/quarto-nav.js"></script>
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/headroom.min.js"></script>
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/clipboard.min.js"></script>
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/autocomplete.umd.js"></script>
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/fuse.min.js"></script>
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/quarto.js"></script>
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/popper.min.js"></script>
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/tippy.umd.min.js"></script>
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/anchor.min.js"></script>
+<link href="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/tippy.css" rel="stylesheet">
+<link href="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/bootstrap.min.js"></script>
+<link href="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/bootstrap-icons.css" rel="stylesheet">
+<link href="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/htmlwidgets.js"></script>
+<link href="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/datatables-crosstalk.css" rel="stylesheet">
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/datatables.js"></script>
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/jquery-3.6.0.min.js"></script>
+<link href="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/jquery.dataTables.min.css" rel="stylesheet">
+<link href="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/jquery.dataTables.min.js"></script>
+<link href="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/crosstalk.min.css" rel="stylesheet">
+<script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/crosstalk.min.js"></script>
+
+  <script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/polyfill.min.js"></script>
+  <script src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/tex-chtml-full.js" type="text/javascript"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style>
+
+<link rel="stylesheet" href="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/styles.css">
+<style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+_::-webkit-full-page-media, _:future, :root mjx-container {
+  will-change: opacity;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-math {
+  display: inline-block;
+  text-align: left;
+  line-height: 0;
+  text-indent: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  font-size-adjust: none;
+  letter-spacing: normal;
+  border-collapse: collapse;
+  word-wrap: normal;
+  word-spacing: normal;
+  white-space: nowrap;
+  direction: ltr;
+  padding: 1px 0;
+}
+
+mjx-container[jax="CHTML"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="CHTML"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="CHTML"][display="true"] mjx-math {
+  padding: 0;
+}
+
+mjx-container[jax="CHTML"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="CHTML"][justify="right"] {
+  text-align: right;
+}
+
+mjx-mi {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-c {
+  display: inline-block;
+}
+
+mjx-utext {
+  display: inline-block;
+  padding: .75em 0 .2em 0;
+}
+
+mjx-mo {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-stretchy-h {
+  display: inline-table;
+  width: 100%;
+}
+
+mjx-stretchy-h > * {
+  display: table-cell;
+  width: 0;
+}
+
+mjx-stretchy-h > * > mjx-c {
+  display: inline-block;
+  transform: scalex(1.0000001);
+}
+
+mjx-stretchy-h > * > mjx-c::before {
+  display: inline-block;
+  width: initial;
+}
+
+mjx-stretchy-h > mjx-ext {
+  /* IE */ overflow: hidden;
+  /* others */ overflow: clip visible;
+  width: 100%;
+}
+
+mjx-stretchy-h > mjx-ext > mjx-c::before {
+  transform: scalex(500);
+}
+
+mjx-stretchy-h > mjx-ext > mjx-c {
+  width: 0;
+}
+
+mjx-stretchy-h > mjx-beg > mjx-c {
+  margin-right: -.1em;
+}
+
+mjx-stretchy-h > mjx-end > mjx-c {
+  margin-left: -.1em;
+}
+
+mjx-stretchy-v {
+  display: inline-block;
+}
+
+mjx-stretchy-v > * {
+  display: block;
+}
+
+mjx-stretchy-v > mjx-beg {
+  height: 0;
+}
+
+mjx-stretchy-v > mjx-end > mjx-c {
+  display: block;
+}
+
+mjx-stretchy-v > * > mjx-c {
+  transform: scaley(1.0000001);
+  transform-origin: left center;
+  overflow: hidden;
+}
+
+mjx-stretchy-v > mjx-ext {
+  display: block;
+  height: 100%;
+  box-sizing: border-box;
+  border: 0px solid transparent;
+  /* IE */ overflow: hidden;
+  /* others */ overflow: visible clip;
+}
+
+mjx-stretchy-v > mjx-ext > mjx-c::before {
+  width: initial;
+  box-sizing: border-box;
+}
+
+mjx-stretchy-v > mjx-ext > mjx-c {
+  transform: scaleY(500) translateY(.075em);
+  overflow: visible;
+}
+
+mjx-mark {
+  display: inline-block;
+  height: 0px;
+}
+
+mjx-mfrac {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-frac {
+  display: inline-block;
+  vertical-align: 0.17em;
+  padding: 0 .22em;
+}
+
+mjx-frac[type="d"] {
+  vertical-align: .04em;
+}
+
+mjx-frac[delims] {
+  padding: 0 .1em;
+}
+
+mjx-frac[atop] {
+  padding: 0 .12em;
+}
+
+mjx-frac[atop][delims] {
+  padding: 0;
+}
+
+mjx-dtable {
+  display: inline-table;
+  width: 100%;
+}
+
+mjx-dtable > * {
+  font-size: 2000%;
+}
+
+mjx-dbox {
+  display: block;
+  font-size: 5%;
+}
+
+mjx-num {
+  display: block;
+  text-align: center;
+}
+
+mjx-den {
+  display: block;
+  text-align: center;
+}
+
+mjx-mfrac[bevelled] > mjx-num {
+  display: inline-block;
+}
+
+mjx-mfrac[bevelled] > mjx-den {
+  display: inline-block;
+}
+
+mjx-den[align="right"], mjx-num[align="right"] {
+  text-align: right;
+}
+
+mjx-den[align="left"], mjx-num[align="left"] {
+  text-align: left;
+}
+
+mjx-nstrut {
+  display: inline-block;
+  height: .054em;
+  width: 0;
+  vertical-align: -.054em;
+}
+
+mjx-nstrut[type="d"] {
+  height: .217em;
+  vertical-align: -.217em;
+}
+
+mjx-dstrut {
+  display: inline-block;
+  height: .505em;
+  width: 0;
+}
+
+mjx-dstrut[type="d"] {
+  height: .726em;
+}
+
+mjx-line {
+  display: block;
+  box-sizing: border-box;
+  min-height: 1px;
+  height: .06em;
+  border-top: .06em solid;
+  margin: .06em -.1em;
+  overflow: hidden;
+}
+
+mjx-line[type="d"] {
+  margin: .18em -.1em;
+}
+
+mjx-mrow {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-munderover {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-munderover:not([limits="false"]) {
+  padding-top: .1em;
+}
+
+mjx-munderover:not([limits="false"]) > * {
+  display: block;
+}
+
+mjx-msubsup {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-script {
+  display: inline-block;
+  padding-right: .05em;
+  padding-left: .033em;
+}
+
+mjx-script > mjx-spacer {
+  display: block;
+}
+
+mjx-TeXAtom {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-mn {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-msqrt {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-root {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+mjx-surd {
+  display: inline-block;
+  vertical-align: top;
+}
+
+mjx-sqrt {
+  display: inline-block;
+  padding-top: .07em;
+}
+
+mjx-sqrt > mjx-box {
+  border-top: .07em solid;
+}
+
+mjx-sqrt.mjx-tall > mjx-box {
+  padding-left: .3em;
+  margin-left: -.3em;
+}
+
+mjx-msub {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-msup {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-mover {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-mover:not([limits="false"]) {
+  padding-top: .1em;
+}
+
+mjx-mover:not([limits="false"]) > * {
+  display: block;
+  text-align: left;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+
+mjx-stretchy-v.mjx-c221A mjx-beg mjx-c::before {
+  content: "\E001";
+  padding: 0.605em 1.056em 0.014em 0;
+}
+
+mjx-stretchy-v.mjx-c221A mjx-ext mjx-c::before {
+  content: "\E000";
+  width: 1.056em;
+}
+
+mjx-stretchy-v.mjx-c221A mjx-end mjx-c::before {
+  content: "\23B7";
+  padding: 0.935em 1.056em 0.885em 0;
+}
+
+mjx-stretchy-v.mjx-c221A > mjx-end {
+  margin-top: -1.82em;
+}
+
+mjx-stretchy-v.mjx-c221A > mjx-ext {
+  border-top-width: 0.589em;
+  border-bottom-width: 1.79em;
+}
+
+.mjx-stretched mjx-c.mjx-c2013::before {
+  content: "\2013";
+}
+
+mjx-stretchy-h.mjx-c2013 mjx-ext mjx-c::before {
+  content: "\2013";
+  padding: 0.285em 0 0 0;
+}
+
+mjx-c.mjx-c1D707.TEX-I::before {
+  padding: 0.442em 0.603em 0.216em 0;
+  content: "\3BC";
+}
+
+mjx-c.mjx-c3D::before {
+  padding: 0.583em 0.778em 0.082em 0;
+  content: "=";
+}
+
+mjx-c.mjx-c2211.TEX-S1::before {
+  padding: 0.75em 1.056em 0.25em 0;
+  content: "\2211";
+}
+
+mjx-c.mjx-c1D44B.TEX-I::before {
+  padding: 0.683em 0.852em 0 0;
+  content: "X";
+}
+
+mjx-c.mjx-c1D441.TEX-I::before {
+  padding: 0.683em 0.888em 0 0;
+  content: "N";
+}
+
+mjx-c.mjx-c39::before {
+  padding: 0.666em 0.5em 0.022em 0;
+  content: "9";
+}
+
+mjx-c.mjx-c2B::before {
+  padding: 0.583em 0.778em 0.082em 0;
+  content: "+";
+}
+
+mjx-c.mjx-c31::before {
+  padding: 0.666em 0.5em 0 0;
+  content: "1";
+}
+
+mjx-c.mjx-c30::before {
+  padding: 0.666em 0.5em 0.022em 0;
+  content: "0";
+}
+
+mjx-c.mjx-c1D70E.TEX-I::before {
+  padding: 0.431em 0.571em 0.011em 0;
+  content: "\3C3";
+}
+
+mjx-c.mjx-c2211.TEX-S2::before {
+  padding: 0.95em 1.444em 0.45em 0;
+  content: "\2211";
+}
+
+mjx-c.mjx-c1D456.TEX-I::before {
+  padding: 0.661em 0.345em 0.011em 0;
+  content: "i";
+}
+
+mjx-c.mjx-c28::before {
+  padding: 0.75em 0.389em 0.25em 0;
+  content: "(";
+}
+
+mjx-c.mjx-c1D465.TEX-I::before {
+  padding: 0.442em 0.572em 0.011em 0;
+  content: "x";
+}
+
+mjx-c.mjx-c2212::before {
+  padding: 0.583em 0.778em 0.082em 0;
+  content: "\2212";
+}
+
+mjx-c.mjx-c29::before {
+  padding: 0.75em 0.389em 0.25em 0;
+  content: ")";
+}
+
+mjx-c.mjx-c32::before {
+  padding: 0.666em 0.5em 0 0;
+  content: "2";
+}
+
+mjx-c.mjx-c1D460.TEX-I::before {
+  padding: 0.442em 0.469em 0.01em 0;
+  content: "s";
+}
+</style><style id="quarto-target-style"></style></head>
+
+<body class="nav-sidebar docked quarto-light" data-bs-offset="0" style="padding-top: 0px;">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top headroom--not-bottom headroom--not-top headroom--unpinned">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="https://uaappcomp.github.io/apcv302/assignments/">Assignments</a></li><li class="breadcrumb-item"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html">Activity A: Descriptives</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article" style="min-height: calc(0px + 100vh);">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto sidebar-unpinned" style="top: 0px; max-height: 100vh;">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="https://uaappcomp.github.io/apcv302/" class="sidebar-logo-link">
+      <img src="APCV%20302%20Statistics%20in%20the%20Information%20Age%20-%20Activity%20A%20Descriptives_files/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="type-textbox" title="Search"><div class="aa-Autocomplete" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="autocomplete-0-label"><form class="aa-Form d-flex" action="" novalidate="" role="search"><div class="aa-InputWrapperPrefix"><label class="aa-Label" for="autocomplete-0-input" id="autocomplete-0-label"><button class="aa-SubmitButton" type="submit" title="Submit"><svg class="aa-SubmitIcon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16.041 15.856c-0.034 0.026-0.067 0.055-0.099 0.087s-0.060 0.064-0.087 0.099c-1.258 1.213-2.969 1.958-4.855 1.958-1.933 0-3.682-0.782-4.95-2.050s-2.050-3.017-2.050-4.95 0.782-3.682 2.050-4.95 3.017-2.050 4.95-2.050 3.682 0.782 4.95 2.050 2.050 3.017 2.050 4.95c0 1.886-0.745 3.597-1.959 4.856zM21.707 20.293l-3.675-3.675c1.231-1.54 1.968-3.493 1.968-5.618 0-2.485-1.008-4.736-2.636-6.364s-3.879-2.636-6.364-2.636-4.736 1.008-6.364 2.636-2.636 3.879-2.636 6.364 1.008 4.736 2.636 6.364 3.879 2.636 6.364 2.636c2.125 0 4.078-0.737 5.618-1.968l3.675 3.675c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414z"></path></svg></button></label><div class="aa-LoadingIndicator" hidden=""><svg class="aa-LoadingIcon" viewBox="0 0 100 100" width="20" height="20"><circle cx="50" cy="50" fill="none" r="35" stroke="currentColor" stroke-dasharray="164.93361431346415 56.97787143782138" stroke-width="6">
+  <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;90 50 50;180 50 50;360 50 50" keyTimes="0;0.40;0.65;1"></animateTransform>
+</circle></svg></div></div><div class="aa-InputWrapper"><input class="aa-Input" aria-autocomplete="both" aria-labelledby="autocomplete-0-label" id="autocomplete-0-input" autocomplete="off" autocorrect="off" autocapitalize="none" enterkeyhint="search" spellcheck="false" placeholder="" maxlength="512" type="search"></div><div class="aa-InputWrapperSuffix"><button class="aa-CopyButton" type="button" title="Copy link to search" style="display: none;"><i class="bi bi-clipboard"></i></button><button class="aa-ClearButton" type="reset" title="Clear" hidden=""><svg class="aa-ClearIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></button></div></form></div></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+ <span class="menu-text">Information</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/info/syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">APCV 302: Statistics in the Information Age</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/info/faq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">FAQ</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/info/cloud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Posit Cloud</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/info/declaration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grading Declarations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="https://uaappcomp.github.io/apcv302/modules/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modules</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/modules/module1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 1: Introduction to Inferential and Descriptive Statistics &amp; Research Design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/modules/module2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 2: Graphing and Summarizing Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/modules/module3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 3: Describing Bivariate Data &amp; Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/modules/module4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 4: Probability &amp; Normal Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/modules/module5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 5: Sampling Distributions &amp; Hypothesis Testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/modules/module6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module 6: Tests of Means &amp; ANOVA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="https://uaappcomp.github.io/apcv302/assignments/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Assignments</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Activity A: Descriptives</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/assignments/activityb.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activity B: Correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/assignments/activityc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activity C: Probability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/assignments/activityd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activity D: Research</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/assignments/activitye.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Activity E: Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/assignments/final.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Final Project</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/assignments/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction Post</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/assignments/participation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Weekly Chapter Questions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/assignments/quizzes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quizzes</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Resources</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/guides/" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General Resources</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/guides/302.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">302-specific</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://uaappcomp.github.io/apcv302/guides/texts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Texts</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar sidebar-unpinned" style="top: 0px; max-height: 100vh;">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#relevant-r" id="toc-relevant-r" class="nav-link" data-scroll-target="#relevant-r">Relevant R</a>
+  <ul class="collapse">
+  <li><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#mean" id="toc-mean" class="nav-link" data-scroll-target="#mean">Mean</a></li>
+  <li><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#median" id="toc-median" class="nav-link" data-scroll-target="#median">Median</a></li>
+  <li><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#standard-deviation" id="toc-standard-deviation" class="nav-link" data-scroll-target="#standard-deviation">Standard Deviation</a></li>
+  <li><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#interquartile-range" id="toc-interquartile-range" class="nav-link" data-scroll-target="#interquartile-range">Interquartile Range</a></li>
+  </ul></li>
+  <li><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">The Data</a></li>
+  <li><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#assignment" id="toc-assignment" class="nav-link active" data-scroll-target="#assignment">Assignment</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="https://uaappcomp.github.io/apcv302/assignments/">Assignments</a></li><li class="breadcrumb-item"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html">Activity A: Descriptives</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Activity A: Descriptives</h1>
+</div>
+
+<div>
+  <div class="description">
+    Activity A serves as both an introduction to using Quarto and R, 
+while giving you an opportunity to explore basic descriptive statistics.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Each activity will come with some sort of narrative context. This is 
+to help you operationalize the statistical concepts and see the 
+applicability. For this assignment, the context is:</p>
+<blockquote class="blockquote">
+<p>You are tasked with doing some research on just how much people are 
+spending at a particular grocery store. One day, you wait by the exit 
+door with a clipboard and ask people how much they spent as they’re 
+exiting. You jot down how much they spent and give them an ID number to 
+know when you’ve reached your goal of 200.</p>
+</blockquote>
+<section id="relevant-r" class="level1">
+<h1>Relevant R</h1>
+<p>This is your first R-based assignment after your “Introduction to R” 
+project (remember, you’re just exploring that one, not actually 
+submitting anything). It may still feel entirely new to you. Here we’ll 
+walk through getting set up to do this assignment (and later ones) as 
+pain-free as possible. Remember, we’re using Posit Cloud for this! See 
+the Posit Cloud instruction page if you’re still unsure about this.</p>
+<p>(Note that while you’ll normally have to deal with missing data. In 
+this project, we’re generating data that is clean and has no missing 
+data.)</p>
+<p>There is some overlap between what you explored in the Introduction 
+to R project and what you’re seeing below. This is intentional!</p>
+<section id="mean" class="level2">
+<h2 class="anchored" data-anchor-id="mean">Mean<a class="anchorjs-link " aria-label="Anchor" data-anchorjs-icon="" href="#mean" style="font: 1em / 1 anchorjs-icons; margin-left: 0.1875em; padding-right: 0.1875em; padding-left: 0.1875em;"></a></h2>
+<p>The sum of all items in the set divided by the number of items in the set. This is represented as:</p>
+<p><span class="math display"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" style="font-size: 110%; position: relative;" display="true" tabindex="0" ctxtmenu_counter="0"><mjx-math display="true" style="margin-left: 0px; margin-right: 0px;" class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D707 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mfrac space="4"><mjx-frac type="d"><mjx-num><mjx-nstrut type="d"></mjx-nstrut><mjx-mrow><mjx-munderover limits="false"><mjx-mo class="mjx-sop"><mjx-c class="mjx-c2211 TEX-S1"></mjx-c></mjx-mo><mjx-script style="vertical-align: -0.285em; margin-left: 0px;"><mjx-texatom size="s" texclass="ORD"></mjx-texatom><mjx-spacer style="margin-top: 0.762em;"></mjx-spacer><mjx-texatom size="s" texclass="ORD"></mjx-texatom></mjx-script></mjx-munderover><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D44B TEX-I"></mjx-c></mjx-mi></mjx-mrow></mjx-num><mjx-dbox><mjx-dtable><mjx-line type="d"></mjx-line><mjx-row><mjx-den><mjx-dstrut type="d"></mjx-dstrut><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D441 TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac></mjx-math><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>μ</mi><mo>=</mo><mfrac><mrow><munderover><mo data-mjx-texclass="OP">∑</mo><mrow data-mjx-texclass="ORD"></mrow><mrow data-mjx-texclass="ORD"></mrow></munderover><mi>X</mi></mrow><mi>N</mi></mfrac></math></mjx-assistive-mml></mjx-container></span></p>
+<p>In R, you’ll be using the <code>mean()</code> function. For example, if we have a set number numbers, <code>14, 10, 3, 67, 32, 1, 9, 2</code> and wanted to find the average of this, we could write out:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">10</span>, <span class="dv">3</span>, <span class="dv">67</span>, <span class="dv">32</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17.25</code></pre>
+</div>
+</div>
+<p><em>Note that using <code>c()</code> turns the items into a vector by <strong>combining</strong> items. This is key! If you just used <code>mean(10, 3, 67, 32, 1, 9)</code> you will get an error.</em></p>
+<p>For more on calculating the mean in R, see <a href="https://statisticsglobe.com/mean-function-in-r" target="_blank" class="external">here</a>.</p>
+</section>
+<section id="median" class="level2">
+<h2 class="anchored" data-anchor-id="median">Median<a class="anchorjs-link " aria-label="Anchor" data-anchorjs-icon="" href="#median" style="font: 1em / 1 anchorjs-icons; margin-left: 0.1875em; padding-right: 0.1875em; padding-left: 0.1875em;"></a></h2>
+<p>The median is, you’ll remember, the middle value of a set when the set is ordered by value. So, the median value of the set <code>1, 3, 5</code>
+ will be 3. But what about the set with an even number, like the one 
+from above? You’ll take the average of the two middle values, like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">10</span>, <span class="dv">3</span>, <span class="dv">67</span>, <span class="dv">32</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.5</code></pre>
+</div>
+</div>
+<p>In this case, since, when they’re in order, <code>9</code> and <code>10</code> are the two middle values, we take <span class="math inline"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" style="font-size: 110%; position: relative;" tabindex="0" ctxtmenu_counter="1"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mn class="mjx-n"><mjx-c class="mjx-c39"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2B"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c31"></mjx-c><mjx-c class="mjx-c30"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn><mo>+</mo><mn>10</mn></math></mjx-assistive-mml></mjx-container></span>,
+ which gives us 19, then divide by two, which gives us 9.5, as 
+demonstrated above. For more on calculating the median in R, see <a href="https://statisticsglobe.com/median-in-r-programming-function" target="_blank" class="external">here</a></p>
+</section>
+<section id="standard-deviation" class="level2">
+<h2 class="anchored" data-anchor-id="standard-deviation">Standard Deviation<a class="anchorjs-link " aria-label="Anchor" data-anchorjs-icon="" href="#standard-deviation" style="font: 1em / 1 anchorjs-icons; margin-left: 0.1875em; padding-right: 0.1875em; padding-left: 0.1875em;"></a></h2>
+<p>Now we’re getting to more complicated mathematics but the R function 
+works much the same as that for mean and median. You’ll recall the 
+standard deviation is essentially a measure of how spread out a set of 
+numbers are. Basically, it can be written as:</p>
+<p><span class="math display"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" style="font-size: 110%; position: relative;" display="true" tabindex="0" ctxtmenu_counter="2"><mjx-math display="true" style="margin-left: 0px; margin-right: 0px;" class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D70E TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-msqrt space="4"><mjx-sqrt class="mjx-tall"><mjx-surd><mjx-mo class="mjx-n"><mjx-stretchy-v style="height: 3.6em; vertical-align: -1.05em;" class="mjx-c221A"><mjx-beg><mjx-c></mjx-c></mjx-beg><mjx-ext><mjx-c></mjx-c></mjx-ext><mjx-end><mjx-c></mjx-c></mjx-end><mjx-mark></mjx-mark></mjx-stretchy-v></mjx-mo></mjx-surd><mjx-box style="padding-top: 0.366em;"><mjx-mfrac><mjx-frac type="d"><mjx-num><mjx-nstrut type="d"></mjx-nstrut><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-num><mjx-dbox><mjx-dtable><mjx-line type="d"></mjx-line><mjx-row><mjx-den><mjx-dstrut type="d"></mjx-dstrut><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D441 TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-munderover space="2"><mjx-over style="padding-bottom: 0.2em; padding-left: 0.408em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D441 TEX-I"></mjx-c></mjx-mi></mjx-over><mjx-box><mjx-munder><mjx-row><mjx-base><mjx-mo class="mjx-lop"><mjx-c class="mjx-c2211 TEX-S2"></mjx-c></mjx-mo></mjx-base></mjx-row><mjx-row><mjx-under style="padding-top: 0.167em; padding-left: 0.148em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-texatom></mjx-under></mjx-row></mjx-munder></mjx-box></mjx-munderover><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-msub><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.15em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msub><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="3"><mjx-c class="mjx-c1D707 TEX-I"></mjx-c></mjx-mi><mjx-msup><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-script style="vertical-align: 0.289em;"><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c32"></mjx-c></mjx-mn></mjx-script></mjx-msup></mjx-box></mjx-sqrt></mjx-msqrt></mjx-math><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>σ</mi><mo>=</mo><msqrt><mfrac><mn>1</mn><mi>N</mi></mfrac><munderover><mo data-mjx-texclass="OP">∑</mo><mrow data-mjx-texclass="ORD"><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mi>μ</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></msqrt></math></mjx-assistive-mml></mjx-container></span></p>
+<p>In this case, <span class="math inline"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" style="font-size: 110%; position: relative;" tabindex="0" ctxtmenu_counter="3"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D70E TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>σ</mi></math></mjx-assistive-mml></mjx-container></span> (sigma) refers to the standard deviation of the population (denoted by <span class="math inline"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" style="font-size: 110%; position: relative;" tabindex="0" ctxtmenu_counter="4"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D707 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi></math></mjx-assistive-mml></mjx-container></span>
+ (mu); note that this is generally a mathematical function as opposed to
+ a real-world statistical one as, in the vast majority of cases, you are
+ actually working with a <em>sample</em> of the population and not the population as a whole). When finding the standard deviation for a <em>sample</em>, you will be using the following slightly different formula (note the slight difference, referred to as a <em>correction</em>):</p>
+<p><span class="math display"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" style="font-size: 110%; position: relative;" display="true" tabindex="0" ctxtmenu_counter="5"><mjx-math display="true" style="margin-left: 0px; margin-right: 0px;" class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D460 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-msqrt space="4"><mjx-sqrt class="mjx-tall"><mjx-surd><mjx-mo class="mjx-n"><mjx-stretchy-v style="height: 3.6em; vertical-align: -1.05em;" class="mjx-c221A"><mjx-beg><mjx-c></mjx-c></mjx-beg><mjx-ext><mjx-c></mjx-c></mjx-ext><mjx-end><mjx-c></mjx-c></mjx-end><mjx-mark></mjx-mark></mjx-stretchy-v></mjx-mo></mjx-surd><mjx-box style="padding-top: 0.366em;"><mjx-mfrac><mjx-frac type="d"><mjx-num><mjx-nstrut type="d"></mjx-nstrut><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-num><mjx-dbox><mjx-dtable><mjx-line type="d"></mjx-line><mjx-row><mjx-den><mjx-dstrut type="d"></mjx-dstrut><mjx-mrow><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D441 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-mrow></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-munderover space="2"><mjx-over style="padding-bottom: 0.2em; padding-left: 0.408em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D441 TEX-I"></mjx-c></mjx-mi></mjx-over><mjx-box><mjx-munder><mjx-row><mjx-base><mjx-mo class="mjx-lop"><mjx-c class="mjx-c2211 TEX-S2"></mjx-c></mjx-mo></mjx-base></mjx-row><mjx-row><mjx-under style="padding-top: 0.167em; padding-left: 0.148em;"><mjx-texatom size="s" texclass="ORD"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-texatom></mjx-under></mjx-row></mjx-munder></mjx-box></mjx-munderover><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-msub><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: -0.15em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msub><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mover space="3"><mjx-over style="padding-bottom: 0.18em; margin-bottom: -0.248em;"><mjx-mo class="mjx-n"><mjx-stretchy-h style="width: 0.572em;" class="mjx-c2013"><mjx-ext><mjx-c></mjx-c></mjx-ext></mjx-stretchy-h></mjx-mo></mjx-over><mjx-base><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi></mjx-base></mjx-mover><mjx-msup><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-script style="vertical-align: 0.289em;"><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c32"></mjx-c></mjx-mn></mjx-script></mjx-msup></mjx-box></mjx-sqrt></mjx-msqrt></mjx-math><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>s</mi><mo>=</mo><msqrt><mfrac><mn>1</mn><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></mfrac><munderover><mo data-mjx-texclass="OP">∑</mo><mrow data-mjx-texclass="ORD"><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mover><mi>x</mi><mo accent="true">―</mo></mover><msup><mo stretchy="false">)</mo><mn>2</mn></msup></msqrt></math></mjx-assistive-mml></mjx-container></span></p>
+<p>We can calculate the standard deviation rather easily in R by using the <code>sd()</code>
+ function. Keep in mind that R will always calculate the standard 
+deviation with the sample correction as it won’t treat your data as a 
+full population. Again using our little 8-digit vector, we can simply 
+calculate:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(<span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">10</span>, <span class="dv">3</span>, <span class="dv">67</span>, <span class="dv">32</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 22.43562</code></pre>
+</div>
+</div>
+<p>If we wanted R to treat the data like it’s an entire population, we could simply manually add in a correction, ourselves:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">10</span>, <span class="dv">3</span>, <span class="dv">67</span>, <span class="dv">32</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">2</span>) <span class="co"># Let's call it x to make the calculation easier</span></span>
+<span id="cb7-2"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(x)<span class="sc">*</span>(<span class="fu">sqrt</span>((<span class="fu">length</span>(x)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">/</span><span class="fu">length</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20.9866</code></pre>
+</div>
+</div>
+</section>
+<section id="interquartile-range" class="level2">
+<h2 class="anchored" data-anchor-id="interquartile-range">Interquartile Range<a class="anchorjs-link " aria-label="Anchor" data-anchorjs-icon="" href="#interquartile-range" style="font: 1em / 1 anchorjs-icons; margin-left: 0.1875em; padding-right: 0.1875em; padding-left: 0.1875em;"></a></h2>
+<p>Essentially, the interquartile range (IQR) is the middle 50% of the 
+data (the 75th percentile minus the 25th percentile; Q3 - Q1). If we 
+think about the entire data set as broken into quarters, the median is 
+the center point, so you’d then take the median of the two halves it 
+creates and subtract them. We can demonstrate this by finding the 75th 
+percentile and the 25th percentile, saving them as objects in R, and 
+manually finding the difference. You’ll then see below that the <code>IQR()</code> function does the same.</p>
+<p>Also, now that we’ve renamed our vector as <em>x</em>, we can just 
+use that, instead. Remember in R you can assign virtually anything to 
+anything else. If you’re typing something more than twice it’s good 
+practice to create it as an environmental object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb9-1" aria-hidden="true" tabindex="-1"></a>Q3 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(x, <span class="fl">0.75</span>) <span class="co"># Calculate the 75th percentile</span></span>
+<span id="cb9-2"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb9-2" aria-hidden="true" tabindex="-1"></a>Q1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(x, <span class="fl">0.25</span>) <span class="co"># Calculate the 25th percentile</span></span>
+<span id="cb9-3"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb9-3" aria-hidden="true" tabindex="-1"></a>manualIQR <span class="ot">&lt;-</span> Q3 <span class="sc">-</span> Q1 <span class="co"># Find the difference</span></span>
+<span id="cb9-4"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb9-5" aria-hidden="true" tabindex="-1"></a>manualIQR <span class="co"># Show the number</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  75% 
+15.75 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(x) <span class="co"># And the function doing the same</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15.75</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="the-data" class="level1">
+<h1>The Data</h1>
+<p>(Again, the content below is to help you understand what’s going on. Your template for this assignment is in the <strong>Activity A</strong> project in Posit Cloud.)</p>
+<p>Let’s generate some data for this assignment, shall we? Since this is
+ generated data, everyone’s values will be (mostly) slightly different.</p>
+<p>Why are we calling it <code>dfa</code>? Well, <code>df</code> is often used as an abbreviation for <code>data frame</code>, which is what a table is called in R. It’s <code>dfa</code> because it’s the <code>data frame</code> for <code>Activity A</code>. It’s important to name data and variables <strong>meaningfully</strong> (not like how we named a vector <em>x</em> above!).</p>
+<p><em>Note</em>: if you want to reference the content in the <code>value</code> column you’ll need to reference the dataframe AND the variable: <code>dfa$value</code>. Remember: <code>dfa</code> refers to the data frame, <code>value</code> refers to the column/variable in that data frame, and the <code>$</code> tells R the relationship (ie, <code>value</code> is a variable in the <code>dfa</code> data frame). Simple as that!</p>
+<p>This is the code that loads the data. It’s already in the template file you’re being provided. Just remember to <strong>change <code>set.seed()</code> to a random number</strong>! You shouldn’t leave it as <code>123456</code>. You can pick anything, from <code>42</code> to <code>8675309</code>, both of which are pretty common.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyr) <span class="co"># To round the numbers to currency</span></span>
+<span id="cb13-2"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># To turn our vector into a dataframe with enframe()</span></span>
+<span id="cb13-3"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT) <span class="co"># To create the table</span></span>
+<span id="cb13-4"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>) <span class="co"># Pick a random 6 digit number - this sets your randomness</span></span>
+<span id="cb13-6"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb13-6" aria-hidden="true" tabindex="-1"></a>dfa <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="at">mean=</span><span class="dv">25</span>, <span class="at">sd=</span><span class="dv">12</span>) <span class="sc">|&gt;</span> <span class="co"># Let's create some prices</span></span>
+<span id="cb13-7"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abs</span>() <span class="sc">|&gt;</span> <span class="co"># Take the absolute value to get rid of any negative numbers</span></span>
+<span id="cb13-8"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round_any</span>(<span class="fl">0.01</span>) <span class="sc">|&gt;</span> <span class="co"># And round them to pennies</span></span>
+<span id="cb13-9"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enframe</span>() <span class="co"># And turn it into a dataframe so we have customer IDs/names</span></span>
+<span id="cb13-10"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="https://uaappcomp.github.io/apcv302/assignments/activitya.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(dfa, <span class="at">caption =</span> <span class="st">"Spending"</span>) <span class="co"># And let's see them!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item html-widget-static-bound" id="htmlwidget-9859a37f2ebabe28f2f4" style="width:100%;height:auto;"><div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><div class="dataTables_length" id="DataTables_Table_0_length"><label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class=""><option value="10" selected="selected">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="DataTables_Table_0"></label></div><table class="display dataTable no-footer" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info"><caption>Spending</caption>
+  <thead>
+    <tr><th class="sorting_disabled" rowspan="1" colspan="1" aria-label=" "> </th><th class="dt-right sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="name: activate to sort column ascending">name</th><th class="dt-right sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="value: activate to sort column ascending">value</th></tr>
+  </thead><tbody><tr class="odd"><td>1</td><td class="  dt-right">1</td><td class="  dt-right">35</td></tr><tr class="even"><td>2</td><td class="  dt-right">2</td><td class="  dt-right">21.69</td></tr><tr class="odd"><td>3</td><td class="  dt-right">3</td><td class="  dt-right">20.74</td></tr><tr class="even"><td>4</td><td class="  dt-right">4</td><td class="  dt-right">26.05</td></tr><tr class="odd"><td>5</td><td class="  dt-right">5</td><td class="  dt-right">52.03</td></tr><tr class="even"><td>6</td><td class="  dt-right">6</td><td class="  dt-right">35.01</td></tr><tr class="odd"><td>7</td><td class="  dt-right">7</td><td class="  dt-right">40.75</td></tr><tr class="even"><td>8</td><td class="  dt-right">8</td><td class="  dt-right">55.03</td></tr><tr class="odd"><td>9</td><td class="  dt-right">9</td><td class="  dt-right">39.02</td></tr><tr class="even"><td>10</td><td class="  dt-right">10</td><td class="  dt-right">19.89</td></tr></tbody>
+</table><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 10 of 200 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" aria-disabled="true" aria-role="link" data-dt-idx="previous" tabindex="-1" id="DataTables_Table_0_previous">Previous</a><span><a class="paginate_button current" aria-controls="DataTables_Table_0" aria-role="link" aria-current="page" data-dt-idx="0" tabindex="0">1</a><a class="paginate_button " aria-controls="DataTables_Table_0" aria-role="link" data-dt-idx="1" tabindex="0">2</a><a class="paginate_button " aria-controls="DataTables_Table_0" aria-role="link" data-dt-idx="2" tabindex="0">3</a><a class="paginate_button " aria-controls="DataTables_Table_0" aria-role="link" data-dt-idx="3" tabindex="0">4</a><a class="paginate_button " aria-controls="DataTables_Table_0" aria-role="link" data-dt-idx="4" tabindex="0">5</a><span class="ellipsis">…</span><a class="paginate_button " aria-controls="DataTables_Table_0" aria-role="link" data-dt-idx="19" tabindex="0">20</a></span><a class="paginate_button next" aria-controls="DataTables_Table_0" aria-role="link" data-dt-idx="next" tabindex="0" id="DataTables_Table_0_next">Next</a></div></div></div>
+<script type="application/json" data-for="htmlwidget-9859a37f2ebabe28f2f4">{"x":{"filter":"none","vertical":false,"caption":"<caption>Spending<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200"],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200],[35,21.69,20.74,26.05,52.03,35.01,40.75,55.03,39.02,19.89,13.05,11.63,24.33,39.09,37.64,25.69,16.18,36.17,45.02,31.72,15.95,40.08,25.46,27.27,30.55,19.87,25.2,33.46,36.66,17.55,14.73,25.83,12.45,7.99,11.44,14.66,43.72,37.18,37.53,11.61,12.14,36.61,27.05,14.24,26.9,18.98,13.41,23.64,38.03,10.46,3.79,19.1,28.86,42.53,43.45,20.93,12.07,7.11,21.97,23.54,17.21,28.76,26.47,14.96,32.21,22.05,22.78,25.28,19.18,16.15,40.63,31.77,3.34,30.26,7.71,36.43,16.32,25.59,6.24,2.63,38.9,16.54,6.11,31.22,12.22,25.56,35.18,30.19,31.27,21.95,19.04,40.12,31.78,20.86,33.7,35.37,29.43,44,25.72,26.54,14.79,38.18,10.52,31.98,35.36,36.8,9.74,24.99,13.47,40.11,14.6,27.99,23.97,19.09,21.77,20.21,13.67,37.16,20.1,22.83,39.21,5.7,2.27,0.51,17.22,33.61,23.76,28.92,13.27,29.1,25.53,12.74,34.52,31.02,6.350000000000001,35.6,22.51,46.98,27.13,15.33,48.38,26.45,20.74,37.63,38.96,15.41,34.31,1.06,20.79,29.57,28.1,36.57,19.1,25.98,23.06,40.27,16.36,43.49,35.24,34.63,20.89,26.2,26.82,4.47,20.9,9.220000000000001,2.08,31.95,4.42,20.22,6.06,47.14,36.71,21.04,39.32,21,27,19.84,48.59,31.71,17.3,24.44,38.61,28.47,30.55,39.18,8.08,17.52,17.11,33.49,5.46,19.62,38.43,27.23,20.66,27.96,29.3,25.2,22.18,20.31]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="assignment" class="level1">
+<h1>Assignment</h1>
+<p>Use the Activity A template in Posit Cloud to complete the following requirements.</p>
+<ol type="1">
+<li>Summarize the data by creating (via R code) <strong>and describing</strong> (via written narrative) the following descriptive statistics and what they mean/why they’re important:
+<ol type="1">
+<li>mean</li>
+<li>median</li>
+<li>standard deviation</li>
+<li>interquartile range</li>
+<li>at least one other descriptive statistics you find interesting about the data</li>
+</ol></li>
+<li>Display a histogram of the <code>dfa$value</code> variable. Is it 
+normally distributed? Skewed? What does the kurtosis look like? Describe
+ the value of being able to see the histogram.</li>
+<li>It’s easiest to write your code in a <code>.R</code> file (called an R script file) so you can easily test it while working. <em>Then</em>, when you’ve got everything above taken care of, transfer it to your <code>.qmd</code>
+ file and use that to present your data rather than simply turning in 
+code and the results.You’ll see an R script file in your Activity A 
+Posit Cloud project called <code>sandbox.R</code>. Use this to work on your code. <em>Just
+ remember that content in an R script file (.R) is treated as code by 
+default, while code in a Quarto (.qmd) file needs to be in a code chunk!</em>
+<ol type="1">
+<li>For this assignment and all others, having gone through the <a href="https://jthomasmock.github.io/quarto-in-two-hours/" target="_blank" class="external">Getting Started with Quarto</a> decks is absolutely key.</li>
+<li>This is very likely going to take some trial and error. Set aside 
+2-3 times the amount of time you think this will take to account for 
+fixing errors and debugging. R code is relatively straight forward and 
+easy to use but it can be somewhat intimidating to the beginner. You’re 
+encouraged to read through most of the <a href="https://quarto.org/docs/authoring/markdown-basics.html" target="_blank" class="external">Quarto Guide</a> as it will make things <em>much</em> easier on you in the long run. When in doubt: copy example code that works and tweak to your specifications.</li>
+</ol></li>
+<li>Submitting the assignment:
+<ol type="1">
+<li>Complete the <em>grading declaration</em> quiz in the LMS. Note that this is <em>not</em>
+ the same content that goes into your assignment submission! Your 
+grading declaration should include, in addition to what the declaration 
+quiz item describes:
+<ol type="1">
+<li>how you accomplished the steps in item 1 above</li>
+<li>why you think descriptive statistics are important</li>
+</ol></li>
+<li>Submit <em>both</em> your <code>qmd</code> and your rendered <code>HTML</code> to the <em>Activity A</em> dropbox in the LMS by the stated due date and time. The submission <em>must</em> contain the requirements listed here or you will not receive credit for assignment!</li>
+<li>Remember: the point of using this file system is <em>reproducibility</em>. Ensure you haven’t removed the <code>embed-resources: true</code> YAML line!</li>
+</ol></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    if (id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        return container.innerHTML
+      } else {
+        return note.innerHTML;
+      }
+    } else {
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      try { hash = new URL(url).hash; } catch {}
+      const id = hash.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note !== null) {
+        try {
+          const html = processXRef(id, note);
+          instance.setContent(html);
+        } finally {
+          instance.enable();
+          instance.show();
+        }
+      } else {
+        // See if we can fetch this
+        fetch(url.split('#')[0])
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.getElementById(id);
+          if (note !== null) {
+            const html = processXRef(id, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          // default icon
+          link.classList.add("external");
+      }
+    }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
